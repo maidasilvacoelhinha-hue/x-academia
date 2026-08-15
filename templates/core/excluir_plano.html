@@ -1,0 +1,7 @@
+{% extends 'core/base.html' %}
+{% block title %}Excluir plano | X Academia{% endblock %}
+{% block content %}
+<section class="success-page"><div class="delete-card"><div class="delete-icon">!</div><h1>Excluir plano?</h1><p>Tem certeza que deseja excluir <strong>{{ plano.nome }}</strong>?</p>
+<form method="post" class="delete-actions">{% csrf_token %}<a class="btn btn-outline" href="{% url 'gerenciar_planos' %}">Cancelar</a><button class="btn btn-danger" type="submit">Excluir</button></form>
+</div></section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+{% block title %}Painel do dono | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+  <div class="container">
+    <span class="eyebrow">PAINEL DO DONO</span>
+    <h1>Gestão da <span>academia.</span></h1>
+    <p>Somente usuários marcados como equipe podem acessar esta área.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="dashboard-cards">
+      <div><small>Alunos</small><strong>{{ total_alunos }}</strong></div>
+      <div><small>Professores</small><strong>{{ total_professores }}</strong></div>
+      <div><small>Planos</small><strong>{{ total_planos }}</strong></div>
+    </div>
+    <div class="owner-actions">
+      <a class="btn btn-primary" href="{% url 'gerenciar_mensalidades' %}">Gerenciar mensalidades</a>
+      <a class="btn btn-outline" href="{% url 'gerenciar_planos' %}">Gerenciar planos</a>
+      <a class="btn btn-outline" href="{% url 'gerenciar_professores' %}">Gerenciar professores</a>
+    </div>
+    <div class="table-wrap">
+      <table class="management-table">
+        <thead><tr><th>Aluno</th><th>Plano</th><th>Status</th><th>Vencimento</th><th></th></tr></thead>
+        <tbody>
+        {% for item in mensalidades %}
+          <tr>
+            <td>{{ item.aluno.username }}<small>{{ item.aluno.email }}</small></td>
+            <td>{{ item.plano|default:"Sem plano" }}</td>
+            <td><span class="status-pill status-{{ item.status_visual }}">{{ item.status_visual_label }}</span></td>
+            <td>{% if item.data_vencimento %}{{ item.data_vencimento|date:"d/m/Y" }}{% else %}—{% endif %}</td>
+            <td><a href="{% url 'editar_mensalidade' item.id %}">Editar</a></td>
+          </tr>
+        {% empty %}<tr><td colspan="5">Nenhum aluno cadastrado.</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

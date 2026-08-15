@@ -1,0 +1,57 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ titulo }} | X Academia{% endblock %}
+
+{% block content %}
+<section class="page-hero compact">
+    <div class="container">
+        <span class="eyebrow">EQUIPE X ACADEMIA</span>
+        <h1>{{ titulo }}.</h1>
+        <p>Preencha os dados que aparecerão na página de professores.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container professor-form-layout">
+        <div class="form-intro">
+            <span class="eyebrow">CADASTRO</span>
+            <h2>Dados do professor</h2>
+            <p>Você pode adicionar nome, especialidade, descrição e foto.</p>
+
+            {% if professor and professor.foto %}
+            <div class="current-photo">
+                <img src="{{ professor.foto.url }}" alt="Foto atual de {{ professor.nome }}">
+                <span>Foto atual</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="form-card">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% if field.errors %}
+                    <div class="field-error">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <a href="{% url 'gerenciar_professores' %}" class="btn btn-outline">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary btn-large">
+                    {{ botao }}
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

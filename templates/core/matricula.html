@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block title %}Matrícula | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><span class="eyebrow">COMECE AGORA</span><h1>Faça sua <span>matrícula.</span></h1><p>Preencha seus dados e nossa equipe entrará em contato.</p></div></section>
+<section class="section">
+    <div class="container form-layout">
+        <div class="form-intro">
+            <span class="eyebrow">É RÁPIDO</span>
+            <h2>Seu próximo treino começa aqui.</h2>
+            <p>Envie seus dados. Depois, nossa equipe poderá confirmar os detalhes da sua matrícula e do plano escolhido.</p>
+            <ul class="check-list"><li>Atendimento personalizado</li><li>Planos para diferentes objetivos</li><li>Ambiente completo para seus treinos</li></ul>
+        </div>
+        <form method="POST" class="form-card">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<div class="field-error">{{ field.errors|striptags }}</div>{% endif %}
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary btn-full btn-large" type="submit">Enviar matrícula</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

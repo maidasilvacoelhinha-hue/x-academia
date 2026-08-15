@@ -1,0 +1,7 @@
+Django==6.0.7
+Pillow>=11.0,<13.0
+dj-database-url>=2.2,<4.0
+psycopg2-binary>=2.9,<3.0
+whitenoise[brotli]>=6.8,<7.0
+gunicorn>=23.0,<24.0
+uvicorn>=0.34,<1.0

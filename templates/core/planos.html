@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block title %}Planos | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><span class="eyebrow">PLANOS</span><h1>Escolha o plano que combina<br><span>com seu objetivo.</span></h1></div></section>
+<section class="section section-dark">
+    <div class="container">
+        <div class="cards-grid plans-grid plans-page">
+            {% for plano in planos %}
+            <article class="plan-card">
+                <span class="plan-tag">X ACADEMIA</span>
+                <h2>{{ plano.nome }}</h2>
+                <div class="price">R$ {{ plano.preco }}<small>/mês</small></div>
+                <p>{{ plano.descricao }}</p>
+                <a href="{% url 'matricula' %}" class="btn btn-primary btn-full">Quero este plano</a>
+            </article>
+            {% empty %}
+            <div class="empty-state">Nenhum plano cadastrado.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

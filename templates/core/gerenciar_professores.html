@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+{% block title %}Gerenciar professores | X Academia{% endblock %}
+
+{% block content %}
+<section class="page-hero compact">
+    <div class="container">
+        <span class="eyebrow">ÁREA DE GESTÃO</span>
+        <h1>Gerenciar <span>professores.</span></h1>
+        <p>Cadastre, edite ou remova professores diretamente pelo site.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="management-header">
+            <div>
+                <span class="eyebrow">EQUIPE</span>
+                <h2>Professores cadastrados</h2>
+            </div>
+            <a href="{% url 'cadastrar_professor' %}" class="btn btn-primary">
+                + Cadastrar professor
+            </a>
+        </div>
+
+        <div class="management-grid">
+            {% for professor in professores %}
+            <article class="management-card">
+                {% if professor.foto %}
+                    <img src="{{ professor.foto.url }}" alt="Foto de {{ professor.nome }}">
+                {% else %}
+                    <div class="management-placeholder">👤</div>
+                {% endif %}
+
+                <div class="management-body">
+                    <span class="management-specialty">
+                        {{ professor.especialidade }}
+                    </span>
+                    <h3>{{ professor.nome }}</h3>
+
+                    {% if professor.descricao %}
+                        <p>{{ professor.descricao|truncatechars:130 }}</p>
+                    {% endif %}
+
+                    <div class="management-actions">
+                        <a href="{% url 'editar_professor' professor.id %}" class="btn btn-outline">
+                            Editar
+                        </a>
+                        <a href="{% url 'excluir_professor' professor.id %}" class="btn btn-danger">
+                            Excluir
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="empty-state">
+                <h3>Nenhum professor cadastrado.</h3>
+                <p>Cadastre o primeiro professor da equipe.</p>
+                <a href="{% url 'cadastrar_professor' %}" class="btn btn-primary">
+                    Cadastrar professor
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block title %}Criar conta | X Academia{% endblock %}
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <span class="eyebrow">FAÇA PARTE</span>
+        <h1>Criar sua conta</h1>
+        <p class="auth-subtitle">Cadastre-se para ter uma experiência mais completa.</p>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+                    {% if field.errors %}<div class="field-error">{{ field.errors|striptags }}</div>{% endif %}
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary btn-full btn-large" type="submit">Criar conta</button>
+        </form>
+        <p class="auth-footer">Já tem uma conta? <a href="{% url 'login' %}">Entrar</a></p>
+    </div>
+</section>
+{% endblock %}

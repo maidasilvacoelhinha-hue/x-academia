@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+{% block title %}Início | X Academia{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <span class="eyebrow">TREINE. EVOLUA. SUPERE.</span>
+        <h1>Seu próximo nível<br><span>começa agora.</span></h1>
+        <p>Uma academia completa para quem leva seus objetivos a sério.</p>
+        <div class="hero-actions">
+            <a href="{% url 'matricula' %}" class="btn btn-primary btn-large">Quero me matricular</a>
+            <a href="{% url 'planos' %}" class="btn btn-ghost btn-large">Ver planos</a>
+        </div>
+        <div class="hero-stats">
+            <div><strong>+500</strong><span>alunos ativos</span></div>
+            <div><strong>+20</strong><span>profissionais</span></div>
+            <div><strong>6h–22h</strong><span>horário amplo</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="section diferenciais">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">POR QUE A X?</span>
+            <h2>Estrutura para você <span>evoluir.</span></h2>
+            <p>Tudo o que você precisa para treinar com segurança, constância e motivação.</p>
+        </div>
+
+        <div class="feature-grid">
+            <article class="feature-card"><div class="feature-icon">🏋️</div><h3>Equipamentos modernos</h3><p>Máquinas e acessórios selecionados para diferentes objetivos e níveis.</p></article>
+            <article class="feature-card"><div class="feature-icon">🎯</div><h3>Foco no resultado</h3><p>Ambiente pensado para manter sua rotina de treino simples e eficiente.</p></article>
+            <article class="feature-card"><div class="feature-icon">👨‍🏫</div><h3>Equipe qualificada</h3><p>Profissionais preparados para orientar você durante sua evolução.</p></article>
+            <article class="feature-card"><div class="feature-icon">⚡</div><h3>Horários flexíveis</h3><p>Mais liberdade para encaixar o treino na sua rotina.</p></article>
+        </div>
+    </div>
+</section>
+
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">TREINE DO SEU JEITO</span>
+            <h2>Nossas <span>modalidades</span></h2>
+        </div>
+        <div class="cards-grid">
+            {% for modalidade in modalidades %}
+            <article class="info-card">
+                <span class="card-number">{{ forloop.counter|stringformat:"02d" }}</span>
+                <h3>{{ modalidade.nome }}</h3>
+                <p>{{ modalidade.descricao }}</p>
+            </article>
+            {% empty %}
+            <div class="empty-state">Nenhuma modalidade cadastrada no momento.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section planos-home">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">ESCOLHA SEU PLANO</span>
+            <h2>Invista em <span>você.</span></h2>
+        </div>
+        <div class="cards-grid plans-grid">
+            {% for plano in planos %}
+            <article class="plan-card">
+                <span class="plan-tag">PLANO</span>
+                <h3>{{ plano.nome }}</h3>
+                <div class="price">R$ {{ plano.preco }}<small>/mês</small></div>
+                <p>{{ plano.descricao }}</p>
+                <a href="{% url 'matricula' %}" class="btn btn-primary btn-full">Escolher plano</a>
+            </article>
+            {% empty %}
+            <div class="empty-state">Nenhum plano cadastrado no momento.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section equipe-home">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">QUEM ESTÁ COM VOCÊ</span>
+            <h2>Nossa <span>equipe.</span></h2>
+        </div>
+        <div class="cards-grid">
+            {% for professor in professores %}
+            <article class="professor-card">
+                {% if professor.foto %}
+                    <img src="{{ professor.foto.url }}" alt="Foto de {{ professor.nome }}">
+                {% else %}
+                    <div class="professor-placeholder">👤</div>
+                {% endif %}
+                <div class="professor-body">
+                    <h3>{{ professor.nome }}</h3>
+                    <strong>{{ professor.especialidade }}</strong>
+                    {% if professor.descricao %}<p>{{ professor.descricao }}</p>{% endif %}
+                </div>
+            </article>
+            {% empty %}
+            <div class="empty-state">Nenhum professor cadastrado no momento.</div>
+            {% endfor %}
+        </div>
+        <div class="center-action"><a href="{% url 'professores' %}" class="btn btn-outline-dark">Conheça toda a equipe</a></div>
+    </div>
+</section>
+
+<section class="section testimonials">
+    <div class="container">
+        <div class="section-heading">
+            <span class="eyebrow">QUEM TREINA, RECOMENDA</span>
+            <h2>Experiências <span>reais.</span></h2>
+        </div>
+        <div class="testimonial-grid">
+            <blockquote><p>“Excelente estrutura e atendimento. Recomendo a X Academia!”</p><cite>— Carlos Henrique</cite></blockquote>
+            <blockquote><p>“Os professores acompanham de perto a evolução dos alunos.”</p><cite>— Ana Paula</cite></blockquote>
+            <blockquote><p>“Ambiente agradável e equipamentos modernos. Vale muito a pena.”</p><cite>— Lucas Silva</cite></blockquote>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container cta-inner">
+        <div><span class="eyebrow">PRONTO PARA COMEÇAR?</span><h2>Seu objetivo merece um plano.</h2><p>Faça sua matrícula e dê o primeiro passo.</p></div>
+        <a href="{% url 'matricula' %}" class="btn btn-light btn-large">Fazer matrícula</a>
+    </div>
+</section>
+{% endblock %}

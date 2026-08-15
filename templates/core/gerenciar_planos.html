@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% block title %}Gerenciar planos | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><span class="eyebrow">GESTÃO</span><h1>Gerenciar <span>planos.</span></h1></div></section>
+<section class="section"><div class="container">
+<div class="management-header"><h2>Planos cadastrados</h2><a class="btn btn-primary" href="{% url 'cadastrar_plano' %}">+ Cadastrar plano</a></div>
+<div class="cards-grid">{% for plano in planos %}
+<article class="plan-card"><h3>{{ plano.nome }}</h3><div class="price">R$ {{ plano.preco }}</div><p>{{ plano.descricao }}</p>
+<div class="management-actions"><a class="btn btn-outline" href="{% url 'editar_plano' plano.id %}">Editar</a><a class="btn btn-danger" href="{% url 'excluir_plano' plano.id %}">Excluir</a></div></article>
+{% empty %}<div class="empty-state">Nenhum plano cadastrado.</div>{% endfor %}</div>
+</div></section>
+{% endblock %}

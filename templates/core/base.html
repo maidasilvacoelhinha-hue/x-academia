@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="X Academia — estrutura moderna, profissionais qualificados e planos para todos os objetivos.">
+    <title>{% block title %}X Academia{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a class="logo" href="{% url 'home' %}" aria-label="X Academia - início">
+            <span class="logo-mark">X</span>
+            <span>ACADEMIA</span>
+        </a>
+
+        <nav class="nav" aria-label="Navegação principal">
+            <a href="{% url 'home' %}">Início</a>
+            <a href="{% url 'sobre' %}">Sobre</a>
+            <a href="{% url 'planos' %}">Planos</a>
+            <a href="{% url 'professores' %}">Professores</a>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <a href="{% url 'painel_dono' %}">Painel do dono</a>
+                {% else %}
+                    <a href="{% url 'painel_aluno' %}">Minha mensalidade</a>
+                {% endif %}
+            {% endif %}
+        </nav>
+
+        <div class="acoes">
+            {% if user.is_authenticated %}
+                <span class="user-greeting">Olá, {{ user.username }}</span>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline" type="submit">Sair</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline">Entrar</a>
+                <a href="{% url 'cadastro' %}" class="btn btn-primary">Cadastrar</a>
+            {% endif %}
+        </div>
+
+        <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    </div>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div>
+            <a class="logo footer-logo" href="{% url 'home' %}">
+                <span class="logo-mark">X</span><span>ACADEMIA</span>
+            </a>
+            <p>Transformando treino em evolução.</p>
+        </div>
+        <div>
+            <h3>Contato</h3>
+            <p>Seg a Sex: 06h às 22h</p>
+            <p>Sáb: 08h às 14h</p>
+        </div>
+        <div>
+            <h3>Acesso rápido</h3>
+            <a href="{% url 'planos' %}">Planos</a>
+            <a href="{% url 'professores' %}">Professores</a>
+            {% if user.is_authenticated %}<a href="{% url 'gerenciar_professores' %}">Gerenciar equipe</a>{% endif %}
+            <a href="{% url 'matricula' %}">Matrícula</a>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>© 2026 X Academia. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+<script>
+    const toggle = document.querySelector(".menu-toggle");
+    const nav = document.querySelector(".nav");
+    if (toggle) {
+        toggle.addEventListener("click", () => {
+            const opened = nav.classList.toggle("is-open");
+            toggle.setAttribute("aria-expanded", opened);
+        });
+    }
+</script>
+
+</body>
+</html>

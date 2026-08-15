@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block title %}Excluir professor | X Academia{% endblock %}
+
+{% block content %}
+<section class="success-page">
+    <div class="delete-card">
+        <div class="delete-icon">!</div>
+        <span class="eyebrow">ATENÇÃO</span>
+        <h1>Excluir professor?</h1>
+        <p>
+            Você está prestes a excluir
+            <strong>{{ professor.nome }}</strong>.
+            Essa ação não poderá ser desfeita.
+        </p>
+
+        <form method="POST" class="delete-actions">
+            {% csrf_token %}
+            <a href="{% url 'gerenciar_professores' %}" class="btn btn-outline">
+                Cancelar
+            </a>
+            <button type="submit" class="btn btn-danger btn-large">
+                Sim, excluir
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

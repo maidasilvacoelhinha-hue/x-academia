@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% block title %}Meu painel | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+  <div class="container">
+    <span class="eyebrow">ÁREA DO ALUNO</span>
+    <h1>Olá, <span>{{ user.username }}</span>.</h1>
+    <p>Acompanhe abaixo a situação da sua mensalidade.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container narrow">
+    <article class="status-card status-{{ mensalidade.status_visual }}">
+      <span class="status-label">{{ mensalidade.status_visual_label }}</span>
+      <h2>Situação da mensalidade</h2>
+      <div class="status-grid">
+        <div><small>Plano</small><strong>{{ mensalidade.plano|default:"Ainda não definido" }}</strong></div>
+        <div><small>Vencimento</small><strong>{% if mensalidade.data_vencimento %}{{ mensalidade.data_vencimento|date:"d/m/Y" }}{% else %}Não informado{% endif %}</strong></div>
+        <div><small>Última atualização</small><strong>{{ mensalidade.atualizado_em|date:"d/m/Y H:i" }}</strong></div>
+      </div>
+      {% if mensalidade.observacao %}<p class="status-note">{{ mensalidade.observacao }}</p>{% endif %}
+    </article>
+  </div>
+</section>
+{% endblock %}

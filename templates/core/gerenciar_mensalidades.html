@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block title %}Mensalidades | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><span class="eyebrow">GESTÃO</span><h1>Mensalidades dos <span>alunos.</span></h1></div></section>
+<section class="section"><div class="container">
+<div class="management-header"><div><h2>Todos os alunos</h2><p>Atualize plano, status e vencimento.</p></div><a class="btn btn-outline" href="{% url 'painel_dono' %}">Voltar</a></div>
+<div class="table-wrap"><table class="management-table">
+<thead><tr><th>Aluno</th><th>Plano</th><th>Status</th><th>Vencimento</th><th>Ação</th></tr></thead>
+<tbody>
+{% for item in mensalidades %}
+<tr>
+<td>{{ item.aluno.username }}<small>{{ item.aluno.email }}</small></td>
+<td>{{ item.plano|default:"Sem plano" }}</td>
+<td><span class="status-pill status-{{ item.status_visual }}">{{ item.status_visual_label }}</span></td>
+<td>{% if item.data_vencimento %}{{ item.data_vencimento|date:"d/m/Y" }}{% else %}—{% endif %}</td>
+<td><a class="btn btn-primary" href="{% url 'editar_mensalidade' item.id %}">Editar</a></td>
+</tr>
+{% empty %}<tr><td colspan="5">Nenhuma mensalidade cadastrada.</td></tr>{% endfor %}
+</tbody></table></div>
+</div></section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block title %}Professores | X Academia{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container"><span class="eyebrow">NOSSA EQUIPE</span><h1>Profissionais que ajudam<br><span>você a chegar mais longe.</span></h1></div></section>
+<section class="section">
+    <div class="container">
+        <div class="cards-grid professor-page-grid">
+            {% for professor in professores %}
+            <article class="professor-card">
+                {% if professor.foto %}<img src="{{ professor.foto.url }}" alt="Foto de {{ professor.nome }}">{% else %}<div class="professor-placeholder">👤</div>{% endif %}
+                <div class="professor-body"><h2>{{ professor.nome }}</h2><strong>{{ professor.especialidade }}</strong>{% if professor.descricao %}<p>{{ professor.descricao }}</p>{% endif %}</div>
+            </article>
+            {% empty %}<div class="empty-state">Nenhum professor cadastrado.</div>{% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

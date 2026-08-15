@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block title %}Matrícula enviada | X Academia{% endblock %}
+{% block content %}
+<section class="success-page">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <span class="eyebrow">TUDO CERTO!</span>
+        <h1>Matrícula enviada.</h1>
+        <p>Obrigado, <strong>{{ matricula.nome }}</strong>. Recebemos seus dados e entraremos em contato para finalizar os detalhes.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Voltar para o início</a>
+    </div>
+</section>
+{% endblock %}
